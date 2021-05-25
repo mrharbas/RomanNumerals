@@ -48,6 +48,15 @@ namespace RomanNumerals
             return result;
         }
 
+        public static int Converts(string number)
+        {
+            ValidateValue(number);
+
+            int result = 0;
+
+            return result;
+        }
+
         private static void ValidateValue(int value)
         {
             if (value <= 0)
@@ -57,6 +66,20 @@ namespace RomanNumerals
             else if (value >= 4000)
             {
                 throw new Exception("This value cannot be parsed to Roman Numerals.");
+            }
+        }
+
+        private static void ValidateValue(string value)
+        {
+            string[] possibleValues = { "I", "V", "X", "L", "C", "D", "M" };
+
+            if (string.IsNullOrEmpty(value) || string.IsNullOrWhiteSpace(value))
+                throw new Exception("None value sent.");
+
+            for (int i = 0; i < value.Length; i++)
+            {
+                if (!possibleValues.ToString().Contains(value.ToUpper()[i]))
+                    throw new Exception("Invalid Value. This is not a Roman Numeral.");
             }
         }
 
