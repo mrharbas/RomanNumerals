@@ -397,6 +397,11 @@ namespace UnitTests
         }
 
         [TestMethod]
+        [DataRow("IVI")]
+        [DataRow("IXI")]
+        [DataRow("XCX")]
+        [DataRow("CDC")]
+        [DataRow("CMC")]
         [DataRow("IIVII")]
         [DataRow("IIII")]
         [DataRow("IIIV")]

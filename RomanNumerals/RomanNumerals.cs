@@ -149,8 +149,18 @@ namespace RomanNumerals
 
             int indexII = value.IndexOf("II");
             int indexIII = value.IndexOf("III");
+            int indexIVI = value.IndexOf("IVI");
+            int indexIXI = value.IndexOf("IXI");
+            int indexXCX = value.IndexOf("XCX");
+            int indexCDC = value.IndexOf("CDC");
+            int indexCMC = value.IndexOf("CMC");
 
-            if ((indexIII == -1 && indexII != -1 && indexII != value.Length - 2) || (indexIII != -1 && indexIII != value.Length - 3))
+            if
+            (
+                (indexIII == -1 && indexII != -1 && indexII != value.Length - 2) ||
+                (indexIII != -1 && indexIII != value.Length - 3) ||
+                (indexIXI != -1) || (indexXCX != -1) || (indexIVI != -1) || (indexCDC != -1) || (indexCMC != -1)
+            )
             {
                 throw new Exception(errorInvalidRomanNumeral);
             }
