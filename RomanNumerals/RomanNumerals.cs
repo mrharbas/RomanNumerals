@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace RomanNumerals
 {
@@ -52,7 +53,69 @@ namespace RomanNumerals
         {
             ValidateValue(number);
 
+            number = number.Trim().ToUpper();
+
             int result = 0;
+
+            for (int i = 0; i < number.Length; i++)
+            {
+                if (i == 0)
+                    result += CalculateRomanNumeralValue(number[i]);
+                else
+                    result += CalculateRomanNumeralValue(number[i], number[i - 1]);
+            }
+
+            return result;
+        }
+
+        private static int CalculateRomanNumeralValue(char currentNumeral, char? lastNumeral = null)
+        {
+            int result = 0;
+
+            switch (currentNumeral)
+            {
+                case 'I':
+                    result = 1;
+                    break;
+                case 'V':
+                    if (lastNumeral == 'I')
+                        result = 3;
+                    else
+                        result = 5;
+                    break;
+                case 'X':
+                    if (lastNumeral == 'I')
+                        result = 8;
+                    else
+                        result = 10;
+                    break;
+                case 'L':
+                    if (lastNumeral == 'X')
+                        result = 30;
+                    else
+                        result = 50;
+                    break;
+                case 'C':
+                    if (lastNumeral == 'X')
+                        result = 80;
+                    else
+                        result = 100;
+                    break;
+                case 'D':
+                    if (lastNumeral == 'C')
+                        result = 300;
+                    else
+                        result = 500;
+                    break;
+                case 'M':
+                    if (lastNumeral == 'C')
+                        result = 800;
+                    else
+                        result = 1000;
+                    break;
+                default:
+                    throw new Exception("Error. Invalid Numeral");
+            }
 
             return result;
         }
@@ -71,15 +134,62 @@ namespace RomanNumerals
 
         private static void ValidateValue(string value)
         {
-            string[] possibleValues = { "I", "V", "X", "L", "C", "D", "M" };
+            string possibleValues = "IVXLCDM";
+
+            string impossibleBeforeVX = "V";
+            string impossibleBeforeLC = "IV";
+            string impossibleBeforeDM = "IVXD";
+
+            string errorInvalidRomanNumeral = "Error. This is not a valid Roman Numeral.";
 
             if (string.IsNullOrEmpty(value) || string.IsNullOrWhiteSpace(value))
                 throw new Exception("None value sent.");
 
+            value = value.Trim().ToUpper();
+
+            int indexII = value.IndexOf("II");
+            int indexIII = value.IndexOf("III");
+
+            if ((indexIII == -1 && indexII != -1 && indexII != value.Length - 2) || (indexIII != -1 && indexIII != value.Length - 3))
+            {
+                throw new Exception(errorInvalidRomanNumeral);
+            }
+
             for (int i = 0; i < value.Length; i++)
             {
-                if (!possibleValues.ToString().Contains(value.ToUpper()[i]))
+                if (possibleValues.IndexOf(value[i]) == -1)
                     throw new Exception("Invalid Value. This is not a Roman Numeral.");
+
+                if (i > 0)
+                {
+                    char currentChar = value[i];
+                    char lastChar = value[i - 1];
+
+                    switch (currentChar)
+                    {
+                        case 'V':
+                        case 'X':
+                            if (impossibleBeforeVX.IndexOf(lastChar) != -1)
+                            {
+                                throw new Exception(errorInvalidRomanNumeral);
+                            }
+                            break;
+                        case 'L':
+                        case 'C':
+                            if (impossibleBeforeLC.IndexOf(lastChar) != -1)
+                            {
+                                throw new Exception(errorInvalidRomanNumeral);
+                            }
+                            break;
+                        case 'D':
+                        case 'M':
+                            if (impossibleBeforeDM.IndexOf(lastChar) != -1)
+                            {
+                                throw new Exception(errorInvalidRomanNumeral);
+                            }
+                            break;
+                    }
+                }
             }
         }
 

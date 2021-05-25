@@ -8,7 +8,7 @@ namespace RomanNumerals
         {
             Console.WriteLine("\n\tROMAN NUMERALS!");
 
-            string option = string.Empty;
+            string option;
 
             do
             {
@@ -24,13 +24,20 @@ namespace RomanNumerals
                     case "1":
                         try
                         {
-                            int value = ReadDecimal();
-                            PrintResult(value);
+                            string integer = ReadValue("Type an Integer to convert to Roman Numerals: ");
+                            PrintResult(int.Parse(integer));
                         }
                         catch
                         {
                             Console.WriteLine("\n\tTHIS IS NOT A VALID NUMBER!");
                         }
+                        break;
+                    case "2":
+                        string romanNumeral = ReadValue("Type a Roman Numeral to convert to Integer: ");
+                        PrintResult(romanNumeral);
+                        break;
+                    case "9":
+                        Console.Clear();
                         break;
                     default:
                         Console.WriteLine("\n\tINVALID OPTION.");
@@ -49,19 +56,18 @@ namespace RomanNumerals
             Console.WriteLine("\n\tCHOOSE AN OPTION:\n");
             Console.WriteLine("\t1 - Parse from Decimal to Roman Numerals");
             Console.WriteLine("\t2 - Parse from Roman Numerals to Decimal");
+            Console.WriteLine("\t9 - Clear");
             Console.WriteLine("\t0 - Exit");
             Console.Write("\n\tOPTION: ");
         }
 
-        static int ReadDecimal()
+        static string ReadValue(string message)
         {
-            string value = string.Empty;
+            Console.Write($"\n\t{message}");
 
-            Console.Write("\n\tType a number to convert to Roman Numerals: ");
+            string value = Console.ReadLine();
 
-            value = Console.ReadLine();
-
-            return int.Parse(value);
+            return value;
         }
 
         static void PrintResult(int number)
@@ -70,6 +76,20 @@ namespace RomanNumerals
             {
 
                 string result = RomanNumerals.Converts(number);
+                Console.WriteLine($"\n\tVALUE: {number}\n\tRESULT: {result}");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"\n\tVALUE: {number}\n\tERROR: {e.Message}");
+            }
+        }
+
+        static void PrintResult(string number)
+        {
+            try
+            {
+
+                int result = RomanNumerals.Converts(number);
                 Console.WriteLine($"\n\tVALUE: {number}\n\tRESULT: {result}");
             }
             catch (Exception e)

@@ -15,6 +15,8 @@ namespace UnitTests
             try
             {
                 string result = RomanNumerals.RomanNumerals.Converts(value);
+
+                throw new Exception("Test Failed.");
             }
             catch (Exception e)
             {
@@ -29,6 +31,8 @@ namespace UnitTests
             try
             {
                 string result = RomanNumerals.RomanNumerals.Converts(value);
+
+                throw new Exception("Test Failed.");
             }
             catch (Exception e)
             {
@@ -45,7 +49,7 @@ namespace UnitTests
         {
             string result = RomanNumerals.RomanNumerals.Converts(value);
 
-            switch(value)
+            switch (value)
             {
                 case 1:
                     Assert.AreEqual(result, "I");
@@ -173,6 +177,257 @@ namespace UnitTests
                 case 1992:
                     Assert.AreEqual(result, "MCMXCII");
                     break;
+            }
+        }
+
+        [TestMethod]
+        [DataRow("I")]
+        [DataRow("III")]
+        [DataRow("IV")]
+        [DataRow("V")]
+        [DataRow("VI")]
+        [DataRow("VII")]
+        [DataRow("IX")]
+        public void ValidateParseToIntUnits(string value)
+        {
+            int result = RomanNumerals.RomanNumerals.Converts(value);
+
+            switch (value)
+            {
+                case "I":
+                    Assert.AreEqual(result, 1);
+                    break;
+                case "III":
+                    Assert.AreEqual(result, 3);
+                    break;
+                case "IV":
+                    Assert.AreEqual(result, 4);
+                    break;
+                case "V":
+                    Assert.AreEqual(result, 5);
+                    break;
+                case "VI":
+                    Assert.AreEqual(result, 6);
+                    break;
+                case "VII":
+                    Assert.AreEqual(result, 7);
+                    break;
+                case "IX":
+                    Assert.AreEqual(result, 9);
+                    break;
+            }
+        }
+
+        [TestMethod]
+        [DataRow("X")]
+        [DataRow("XI")]
+        [DataRow("XV")]
+        [DataRow("XVI")]
+        [DataRow("XIX")]
+        [DataRow("L")]
+        [DataRow("LI")]
+        [DataRow("LVI")]
+        [DataRow("LXX")]
+        [DataRow("LXXIII")]
+        [DataRow("LXXXVIII")]
+        [DataRow("XC")]
+        [DataRow("XCVI")]
+        public void ValidateParseToIntDecimals(string value)
+        {
+            int result = RomanNumerals.RomanNumerals.Converts(value);
+
+            switch (value)
+            {
+                case "X":
+                    Assert.AreEqual(result, 10);
+                    break;
+                case "XI":
+                    Assert.AreEqual(result, 11);
+                    break;
+                case "XV":
+                    Assert.AreEqual(result, 15);
+                    break;
+                case "XVI":
+                    Assert.AreEqual(result, 16);
+                    break;
+                case "XIX":
+                    Assert.AreEqual(result, 19);
+                    break;
+                case "L":
+                    Assert.AreEqual(result, 50);
+                    break;
+                case "LI":
+                    Assert.AreEqual(result, 51);
+                    break;
+                case "LVI":
+                    Assert.AreEqual(result, 56);
+                    break;
+                case "LXX":
+                    Assert.AreEqual(result, 70);
+                    break;
+                case "LXXIII":
+                    Assert.AreEqual(result, 73);
+                    break;
+                case "LXXXVIII":
+                    Assert.AreEqual(result, 88);
+                    break;
+                case "XC":
+                    Assert.AreEqual(result, 90);
+                    break;
+                case "XCVI":
+                    Assert.AreEqual(result, 96);
+                    break;
+            }
+        }
+
+        [TestMethod]
+        [DataRow("C")]
+        [DataRow("CX")]
+        [DataRow("D")]
+        [DataRow("DV")]
+        [DataRow("DL")]
+        [DataRow("CMLXXXVIII")]
+        [DataRow("CMXCIX")]
+        public void ValidateParseToIntHundreds(string value)
+        {
+            int result = RomanNumerals.RomanNumerals.Converts(value);
+
+            switch (value)
+            {
+                case "C":
+                    Assert.AreEqual(result, 100);
+                    break;
+                case "CX":
+                    Assert.AreEqual(result, 110);
+                    break;
+                case "D":
+                    Assert.AreEqual(result, 500);
+                    break;
+                case "DV":
+                    Assert.AreEqual(result, 505);
+                    break;
+                case "DL":
+                    Assert.AreEqual(result, 550);
+                    break;
+                case "CMLXXXVIII":
+                    Assert.AreEqual(result, 988);
+                    break;
+                case "CMXCIX":
+                    Assert.AreEqual(result, 999);
+                    break;
+            }
+        }
+
+        [TestMethod]
+        [DataRow("M")]
+        [DataRow("MI")]
+        [DataRow("MX")]
+        [DataRow("MC")]
+        [DataRow("MCX")]
+        [DataRow("MCXI")]
+        [DataRow("MMCMXCIX")]
+        [DataRow("MMMDLXXXVIII")]
+        public void ValidateParseToIntThousands(string value)
+        {
+            int result = RomanNumerals.RomanNumerals.Converts(value);
+
+            switch (value)
+            {
+                case "M":
+                    Assert.AreEqual(result, 1000);
+                    break;
+                case "MI":
+                    Assert.AreEqual(result, 1001);
+                    break;
+                case "MX":
+                    Assert.AreEqual(result, 1010);
+                    break;
+                case "MC":
+                    Assert.AreEqual(result, 1100);
+                    break;
+                case "MCX":
+                    Assert.AreEqual(result, 1110);
+                    break;
+                case "MCXI":
+                    Assert.AreEqual(result, 1111);
+                    break;
+                case "MMCMXCIX":
+                    Assert.AreEqual(result, 2999);
+                    break;
+                case "MMMDLXXXVIII":
+                    Assert.AreEqual(result, 3588);
+                    break;
+            }
+        }
+
+        [TestMethod]
+        [DataRow("MXA")]
+        [DataRow("ZZZ")]
+        [DataRow("bçqc")]
+        public void ValidateParseToIntInvalidValue(string value)
+        {
+            try
+            {
+                int result = RomanNumerals.RomanNumerals.Converts(value);
+
+                throw new Exception("Test Failed.");
+            }
+            catch (Exception e)
+            {
+                Assert.AreEqual(e.Message, "Invalid Value. This is not a Roman Numeral.");
+            }
+        }
+
+        [TestMethod]
+        [DataRow(null)]
+        [DataRow("")]
+        [DataRow("   ")]
+        public void ValidateParseToIntEmptyValue(string value)
+        {
+            try
+            {
+                int result = RomanNumerals.RomanNumerals.Converts(value);
+
+                throw new Exception("Test Failed.");
+            }
+            catch (Exception e)
+            {
+                Assert.AreEqual(e.Message, "None value sent.");
+            }
+        }
+
+        [TestMethod]
+        [DataRow("IIVII")]
+        [DataRow("IIII")]
+        [DataRow("IIIV")]
+        [DataRow("IIV")]
+        [DataRow("IIX")]
+        [DataRow("IIM")]
+        [DataRow("VV")]
+        [DataRow("VX")]
+        [DataRow("IL")]
+        [DataRow("VL")]
+        [DataRow("IC")]
+        [DataRow("VC")]
+        [DataRow("ID")]
+        [DataRow("VD")]
+        [DataRow("XD")]
+        [DataRow("DD")]
+        [DataRow("IM")]
+        [DataRow("VM")]
+        [DataRow("XM")]
+        [DataRow("DM")]
+        public void ValidateInvalidRomanNumeralFormat(string value)
+        {
+            try
+            {
+                int result = RomanNumerals.RomanNumerals.Converts(value);
+                
+                throw new Exception("Test Failed.");
+            }
+            catch (Exception e)
+            {
+                Assert.AreEqual(e.Message, "Error. This is not a valid Roman Numeral.");
             }
         }
     }
