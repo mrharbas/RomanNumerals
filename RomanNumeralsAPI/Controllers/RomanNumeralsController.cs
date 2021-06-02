@@ -22,13 +22,13 @@ namespace RomanNumeralsAPI.Controllers
         [HttpGet("[action]/{value}")]
         public IActionResult Parse(string value)
         {
-            Result result = new(value);
+            Result result = new();
+            bool isNumber = int.TryParse(value, out int number);
 
             try
             {
-                bool isNumber = int.TryParse(value, out int number);
-
-                result.ValueResult = isNumber ? RomanNumerals.RomanNumerals.Converts(number) : RomanNumerals.RomanNumerals.Converts(value);
+                result.DecimalValue = isNumber ? number : RomanNumerals.RomanNumerals.Converts(value);
+                result.RomanNumeralValue = isNumber ? RomanNumerals.RomanNumerals.Converts(number) : value;
                 result.Success = true;
                 result.Message = "Success.";
 
@@ -38,6 +38,10 @@ namespace RomanNumeralsAPI.Controllers
             {
                 result.Success = false;
                 result.Message = e.Message;
+                if (isNumber)
+                    result.DecimalValue = number;
+                else
+                    result.RomanNumeralValue = value;
 
                 return BadRequest(result);
             }
