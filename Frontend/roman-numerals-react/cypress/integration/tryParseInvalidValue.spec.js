@@ -4,6 +4,8 @@ describe('Try Parse Invalid Roman Numeral Value', () => {
 
         cy.contains('Roman Numerals');
 
+        cy.wait(2000);
+
         cy.get('#roman').type('V67', { delay: 100 }).should('have.value', 'V67');
         cy.get('#decimal').should('have.value', '');
 
