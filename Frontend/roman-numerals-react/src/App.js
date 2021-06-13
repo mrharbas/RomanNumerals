@@ -64,16 +64,16 @@ function App() {
             <Row>
               <Col xs={1}><label style={{marginTop: "4px", fontSize: "18px"}}>Roman: </label></Col>
               <Col xs={3}>
-                <input type="text" class="form-control" id="roman" placeholder="Roman Numeral Value" onChange={(e) => convert(e.target.id, e.target.value.toUpperCase())}></input>
+                <input type="text" class="form-control" id="roman" placeholder="Roman Numeral Value" onKeyUp={(e) => convert(e.target.id, e.target.value.toUpperCase())}></input>
               </Col>
-              {focus === "roman" && message !== "" ? <Alert variant={'danger'} style={{paddingBottom: "6px", paddingTop: "6px"}}>{message}</Alert> : null}
+              {focus === "roman" && message !== "" ? <Alert id="romanError" variant={'danger'} style={{paddingBottom: "6px", paddingTop: "6px"}}>{message}</Alert> : null}
             </Row>
             <Row style={{marginTop: "10px"}}>
               <Col xs={1}><label style={{marginTop: "4px", fontSize: "18px"}}>Decimal: </label></Col>
               <Col xs={3}>
-                <input type="text" class="form-control" id="decimal" placeholder="Decimal Value" onChange={(e) => convert(e.target.id, e.target.value.toUpperCase())}></input>
+                <input type="text" class="form-control" id="decimal" placeholder="Decimal Value" onKeyUp={(e) => convert(e.target.id, e.target.value.toUpperCase())}></input>
               </Col>
-              {focus === "decimal" && message !== "" ? <Alert variant={'danger'} style={{paddingBottom: "6px", paddingTop: "6px"}}>{message}</Alert> : null}
+              {focus === "decimal" && message !== "" ? <Alert id="decimalError" variant={'danger'} style={{paddingBottom: "6px", paddingTop: "6px"}}>{message}</Alert> : null}
             </Row>
           </div>
       </Jumbotron>
