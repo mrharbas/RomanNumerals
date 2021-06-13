@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace RomanNumerals
+namespace RomanNumeralsAPI.Models
 {
     public static class RomanNumerals
     {
@@ -68,53 +68,40 @@ namespace RomanNumerals
             return result;
         }
 
-        private static int CalculateRomanNumeralValue(char currentNumeral, char? lastNumeral = null)
+        public static IList<RomanValue> ExplainsValue(string romanNumeral)
         {
-            int result = 0;
+            IList<RomanValue> result = new List<RomanValue>();
+            int sequence = 0;
 
-            switch (currentNumeral)
+            for (int i = 0; i < romanNumeral.Length; i++)
             {
-                case 'I':
-                    result = 1;
-                    break;
-                case 'V':
-                    if (lastNumeral == 'I')
-                        result = 3;
+                string currentChar = romanNumeral[i].ToString();
+
+                RomanValue romanValue = new RomanValue() { Roman = currentChar, Value = Converts(currentChar) };
+
+                if (i > 0 && result[result.Count - 1].Roman.Length == 1)
+                {
+                    string tempRomanNumeral = romanNumeral.Substring(i - 1, 2);
+
+                    int lastAndCurrent = result[result.Count - 1].Value + romanValue.Value;
+                    int valueParsed = Converts(tempRomanNumeral);
+
+                    if (lastAndCurrent != valueParsed)
+                    {
+                        result[result.Count - 1].Value = valueParsed;
+                        result[result.Count - 1].Roman = tempRomanNumeral;
+                    }
                     else
-                        result = 5;
-                    break;
-                case 'X':
-                    if (lastNumeral == 'I')
-                        result = 8;
-                    else
-                        result = 10;
-                    break;
-                case 'L':
-                    if (lastNumeral == 'X')
-                        result = 30;
-                    else
-                        result = 50;
-                    break;
-                case 'C':
-                    if (lastNumeral == 'X')
-                        result = 80;
-                    else
-                        result = 100;
-                    break;
-                case 'D':
-                    if (lastNumeral == 'C')
-                        result = 300;
-                    else
-                        result = 500;
-                    break;
-                case 'M':
-                    if (lastNumeral == 'C')
-                        result = 800;
-                    else
-                        result = 1000;
-                    break;
-                default:
-                    throw new Exception("Error. Invalid Numeral");
+                    {
+                        romanValue.Sequence = ++sequence;
+                        result.Add(romanValue);
+                    }
+                }
+                else
+                {
+                    romanValue.Sequence = ++sequence;
+                    result.Add(romanValue);
+                }
             }
 
             return result;
@@ -201,6 +188,58 @@ namespace RomanNumerals
                     }
                 }
             }
+        }
+
+        private static int CalculateRomanNumeralValue(char currentNumeral, char? lastNumeral = null)
+        {
+            int result = 0;
+
+            switch (currentNumeral)
+            {
+                case 'I':
+                    result = 1;
+                    break;
+                case 'V':
+                    if (lastNumeral == 'I')
+                        result = 3;
+                    else
+                        result = 5;
+                    break;
+                case 'X':
+                    if (lastNumeral == 'I')
+                        result = 8;
+                    else
+                        result = 10;
+                    break;
+                case 'L':
+                    if (lastNumeral == 'X')
+                        result = 30;
+                    else
+                        result = 50;
+                    break;
+                case 'C':
+                    if (lastNumeral == 'X')
+                        result = 80;
+                    else
+                        result = 100;
+                    break;
+                case 'D':
+                    if (lastNumeral == 'C')
+                        result = 300;
+                    else
+                        result = 500;
+                    break;
+                case 'M':
+                    if (lastNumeral == 'C')
+                        result = 800;
+                    else
+                        result = 1000;
+                    break;
+                default:
+                    throw new Exception("Error. Invalid Numeral");
+            }
+
+            return result;
         }
 
         private static string CalculateThousands(int value)

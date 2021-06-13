@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\RomanNumerals\RomanNumerals.csproj" />
+    <ProjectReference Include="..\RomanNumeralsAPI\RomanNumeralsAPI.csproj" />
   </ItemGroup>
 
 </Project>

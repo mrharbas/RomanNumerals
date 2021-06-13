@@ -1,6 +1,6 @@
 using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using RomanNumerals;
+using RomanNumeralsAPI.Models;
 
 namespace UnitTests
 {
@@ -14,7 +14,7 @@ namespace UnitTests
         {
             try
             {
-                string result = RomanNumerals.RomanNumerals.Converts(value);
+                string result = RomanNumerals.Converts(value);
 
                 throw new Exception("Test Failed.");
             }
@@ -30,7 +30,7 @@ namespace UnitTests
         {
             try
             {
-                string result = RomanNumerals.RomanNumerals.Converts(value);
+                string result = RomanNumerals.Converts(value);
 
                 throw new Exception("Test Failed.");
             }
@@ -47,7 +47,7 @@ namespace UnitTests
         [DataRow(9)]
         public void ValidateUnitParse(int value)
         {
-            string result = RomanNumerals.RomanNumerals.Converts(value);
+            string result = RomanNumerals.Converts(value);
 
             switch (value)
             {
@@ -76,7 +76,7 @@ namespace UnitTests
         [DataRow(99)]
         public void ValidateDecimalParse(int value)
         {
-            string result = RomanNumerals.RomanNumerals.Converts(value);
+            string result = RomanNumerals.Converts(value);
 
             switch (value)
             {
@@ -114,7 +114,7 @@ namespace UnitTests
         [DataRow(992)]
         public void ValidateHundredParse(int value)
         {
-            string result = RomanNumerals.RomanNumerals.Converts(value);
+            string result = RomanNumerals.Converts(value);
 
             switch (value)
             {
@@ -152,7 +152,7 @@ namespace UnitTests
         [DataRow(1992)]
         public void ValidateThousandParse(int value)
         {
-            string result = RomanNumerals.RomanNumerals.Converts(value);
+            string result = RomanNumerals.Converts(value);
 
             switch (value)
             {
@@ -190,7 +190,7 @@ namespace UnitTests
         [DataRow("IX")]
         public void ValidateParseToIntUnits(string value)
         {
-            int result = RomanNumerals.RomanNumerals.Converts(value);
+            int result = RomanNumerals.Converts(value);
 
             switch (value)
             {
@@ -234,7 +234,7 @@ namespace UnitTests
         [DataRow("XCVI")]
         public void ValidateParseToIntDecimals(string value)
         {
-            int result = RomanNumerals.RomanNumerals.Converts(value);
+            int result = RomanNumerals.Converts(value);
 
             switch (value)
             {
@@ -290,7 +290,7 @@ namespace UnitTests
         [DataRow("CMXCIX")]
         public void ValidateParseToIntHundreds(string value)
         {
-            int result = RomanNumerals.RomanNumerals.Converts(value);
+            int result = RomanNumerals.Converts(value);
 
             switch (value)
             {
@@ -329,7 +329,7 @@ namespace UnitTests
         [DataRow("MMMDLXXXVIII")]
         public void ValidateParseToIntThousands(string value)
         {
-            int result = RomanNumerals.RomanNumerals.Converts(value);
+            int result = RomanNumerals.Converts(value);
 
             switch (value)
             {
@@ -368,7 +368,7 @@ namespace UnitTests
         {
             try
             {
-                int result = RomanNumerals.RomanNumerals.Converts(value);
+                int result = RomanNumerals.Converts(value);
 
                 throw new Exception("Test Failed.");
             }
@@ -386,7 +386,7 @@ namespace UnitTests
         {
             try
             {
-                int result = RomanNumerals.RomanNumerals.Converts(value);
+                int result = RomanNumerals.Converts(value);
 
                 throw new Exception("Test Failed.");
             }
@@ -426,7 +426,7 @@ namespace UnitTests
         {
             try
             {
-                int result = RomanNumerals.RomanNumerals.Converts(value);
+                int result = RomanNumerals.Converts(value);
                 
                 throw new Exception("Test Failed.");
             }
@@ -434,6 +434,35 @@ namespace UnitTests
             {
                 Assert.AreEqual(e.Message, "Error. This is not a valid Roman Numeral.");
             }
+        }
+
+        [TestMethod]
+        [DataRow("MMCMXCIX")]
+        public void ValidateExplainedValue(string value)
+        {
+            var result = RomanNumerals.ExplainsValue(value);
+
+            Assert.AreEqual(result.Count, 5);
+            
+            Assert.AreEqual(result[0].Roman, "M");
+            Assert.AreEqual(result[0].Value, 1000);
+            Assert.AreEqual(result[0].Sequence, 1);
+
+            Assert.AreEqual(result[1].Roman, "M");
+            Assert.AreEqual(result[1].Value, 1000);
+            Assert.AreEqual(result[1].Sequence, 2);
+
+            Assert.AreEqual(result[2].Roman, "CM");
+            Assert.AreEqual(result[2].Value, 900);
+            Assert.AreEqual(result[2].Sequence, 3);
+
+            Assert.AreEqual(result[3].Roman, "XC");
+            Assert.AreEqual(result[3].Value, 90);
+            Assert.AreEqual(result[3].Sequence, 4);
+            
+            Assert.AreEqual(result[4].Roman, "IX");
+            Assert.AreEqual(result[4].Value, 9);
+            Assert.AreEqual(result[4].Sequence, 5);
         }
     }
 }

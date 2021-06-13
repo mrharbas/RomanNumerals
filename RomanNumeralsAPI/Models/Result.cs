@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace RomanNumeralsAPI.Models
 {
@@ -11,5 +8,7 @@ namespace RomanNumeralsAPI.Models
         public int? DecimalValue { get; set; }
         public string RomanNumeralValue { get; set; }
         public string Message { get; set; }
+
+        public IList<RomanValue> ExplainedValue { get; set; }
     }
 }

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Jumbotron, Alert } from 'react-bootstrap';
+import BootstrapTable from 'react-bootstrap-table-next';
 import axios from 'axios';
 import './App.css';
 
@@ -7,6 +8,7 @@ function App() {
 
   const [roman, setRomanValue] = useState("");
   const [decimal, setDecimalValue] = useState("");
+  const [explainedValues, setExplainedValues] = useState([]);
   const [message, setMessage] = useState("");
   const [focus, setFocus] = useState("");
 
@@ -23,14 +25,17 @@ function App() {
 
       setFocus(type);
 
-      axios.get(`https://localhost:49153/api/RomanNumerals/Parse/${value}`)
+      axios.get(`https://localhost:49155/api/RomanNumerals/Parse/${value}`)
         .then(function (response) {
           const decimalValue = response.data.decimalValue.toString();
           const romanValue = response.data.romanNumeralValue.toString();
 
+          debugger;
+
           setMessage("");
           setDecimalValue(decimalValue);
           setRomanValue(romanValue);
+          setExplainedValues(response.data.explainedValue);
         })
         .catch(function (error) {
           const tempDec = error.response.data.decimalValue;
@@ -42,12 +47,14 @@ function App() {
           setMessage(error.response.data.message);
           setDecimalValue(decimalValue);
           setRomanValue(romanValue);
+          setExplainedValues([]);
         });
     }
     else {
       setMessage("");
       setRomanValue("");
       setDecimalValue("");
+      setExplainedValues([]);
     }
   }
 
@@ -55,6 +62,23 @@ function App() {
     document.getElementById("roman").value = roman;
     document.getElementById("decimal").value = decimal;
   });
+
+  const tableColumns = [{
+    dataField: "sequence",
+    text: "#",
+    align: "center",
+    headerAlign: "center"
+  }, {
+    dataField: "roman",
+    text: "Roman",
+    align: "center",
+    headerAlign: "center"
+  }, {
+    dataField: "value",
+    text: "Value",
+    align: "center",
+    headerAlign: "center"
+  }];
 
   return (
     <Container className="p-5">
@@ -75,6 +99,19 @@ function App() {
               </Col>
               {focus === "decimal" && message !== "" ? <Alert id="decimalError" variant={'danger'} style={{paddingBottom: "6px", paddingTop: "6px"}}>{message}</Alert> : null}
             </Row>
+            {explainedValues.length > 0 ?
+            <>
+              <Row style={{marginTop: "20px"}}>
+                <Col xs={6}>
+                  <h4>Why this value?:</h4>
+                </Col>
+              </Row>
+              <Row>
+                <Col xs={6}>
+                  <BootstrapTable bootstrap4 keyField='sequence' data={ explainedValues } columns={ tableColumns } noDataIndication="None value to show" striped hover condensed />
+                </Col>
+              </Row>
+            </>: null }
           </div>
       </Jumbotron>
     </Container>

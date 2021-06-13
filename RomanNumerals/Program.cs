@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using RomanNumeralsAPI.Models;
 
-namespace RomanNumerals
+namespace RomanNumeralsConsole
 {
     class Program
     {
@@ -74,9 +76,10 @@ namespace RomanNumerals
         {
             try
             {
-
                 string result = RomanNumerals.Converts(number);
                 Console.WriteLine($"\n\tVALUE: {number}\n\tRESULT: {result}");
+
+                PrintExplainedValue(result);
             }
             catch (Exception e)
             {
@@ -91,11 +94,27 @@ namespace RomanNumerals
 
                 int result = RomanNumerals.Converts(number);
                 Console.WriteLine($"\n\tVALUE: {number}\n\tRESULT: {result}");
+
+                PrintExplainedValue(number);
             }
             catch (Exception e)
             {
                 Console.WriteLine($"\n\tVALUE: {number}\n\tERROR: {e.Message}");
             }
+        }
+
+        static void PrintExplainedValue(string romanNumeral)
+        {
+            IList<RomanValue> result = RomanNumerals.ExplainsValue(romanNumeral);
+
+            Console.WriteLine("\n\tWHY THIS VALUE?:");
+
+            foreach(var item in result)
+            {
+                Console.Write($"\n\t{item.Roman} = {item.Value}");
+            }
+
+            Console.WriteLine();
         }
     }
 }

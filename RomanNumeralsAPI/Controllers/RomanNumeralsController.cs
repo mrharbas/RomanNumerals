@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using RomanNumerals;
 using RomanNumeralsAPI.Models;
 using System;
 using System.Collections.Generic;
@@ -27,8 +26,9 @@ namespace RomanNumeralsAPI.Controllers
 
             try
             {
-                result.DecimalValue = isNumber ? number : RomanNumerals.RomanNumerals.Converts(value);
-                result.RomanNumeralValue = isNumber ? RomanNumerals.RomanNumerals.Converts(number) : value;
+                result.DecimalValue = isNumber ? number : RomanNumerals.Converts(value);
+                result.RomanNumeralValue = isNumber ? RomanNumerals.Converts(number) : value;
+                result.ExplainedValue = RomanNumerals.ExplainsValue(result.RomanNumeralValue);
                 result.Success = true;
                 result.Message = "Success.";
 
