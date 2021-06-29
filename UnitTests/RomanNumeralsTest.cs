@@ -422,6 +422,12 @@ namespace UnitTests
         [DataRow("VM")]
         [DataRow("XM")]
         [DataRow("DM")]
+        [DataRow("IXX")]
+        [DataRow("XCC")]
+        [DataRow("CMM")]
+        [DataRow("XLX")]
+        [DataRow("XLC")]
+        [DataRow("XLM")]
         public void ValidateInvalidRomanNumeralFormat(string value)
         {
             try

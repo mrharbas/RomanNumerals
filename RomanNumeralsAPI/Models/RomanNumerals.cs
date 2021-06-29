@@ -136,17 +136,26 @@ namespace RomanNumeralsAPI.Models
 
             int indexII = value.IndexOf("II");
             int indexIII = value.IndexOf("III");
+
+            // Impossible Combinations
             int indexIVI = value.IndexOf("IVI");
             int indexIXI = value.IndexOf("IXI");
             int indexXCX = value.IndexOf("XCX");
             int indexCDC = value.IndexOf("CDC");
             int indexCMC = value.IndexOf("CMC");
+            int indexIXX = value.IndexOf("IXX");
+            int indexXCC = value.IndexOf("XCC");
+            int indexCMM = value.IndexOf("CMM");
+            int indexXLX = value.IndexOf("XLX");
+            int indexXLC = value.IndexOf("XLC");
+            int indexXLM = value.IndexOf("XLM");
 
             if
             (
                 (indexIII == -1 && indexII != -1 && indexII != value.Length - 2) ||
                 (indexIII != -1 && indexIII != value.Length - 3) ||
-                (indexIXI != -1) || (indexXCX != -1) || (indexIVI != -1) || (indexCDC != -1) || (indexCMC != -1)
+                (indexIXI != -1) || (indexXCX != -1) || (indexIVI != -1) || (indexCDC != -1) || (indexCMC != -1) || (indexIXX != -1) ||
+                (indexXCC != -1) || (indexCMM != -1) || (indexXLX != -1) || (indexXLC != -1) || (indexXLM != -1)
             )
             {
                 throw new Exception(errorInvalidRomanNumeral);
