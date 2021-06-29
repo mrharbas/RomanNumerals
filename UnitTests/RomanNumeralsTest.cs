@@ -408,7 +408,6 @@ namespace UnitTests
         [DataRow("IIV")]
         [DataRow("IIX")]
         [DataRow("IIM")]
-        [DataRow("VV")]
         [DataRow("VX")]
         [DataRow("IL")]
         [DataRow("VL")]
@@ -417,6 +416,8 @@ namespace UnitTests
         [DataRow("ID")]
         [DataRow("VD")]
         [DataRow("XD")]
+        [DataRow("VV")]
+        [DataRow("LL")]
         [DataRow("DD")]
         [DataRow("IM")]
         [DataRow("VM")]
@@ -428,6 +429,9 @@ namespace UnitTests
         [DataRow("XLX")]
         [DataRow("XLC")]
         [DataRow("XLM")]
+        [DataRow("XXXX")]
+        [DataRow("CCCC")]
+        [DataRow("MMMM")]
         public void ValidateInvalidRomanNumeralFormat(string value)
         {
             try

@@ -12,7 +12,7 @@ function App() {
   const [message, setMessage] = useState("");
   const [focus, setFocus] = useState("");
 
-  const convert = (type, value) => {
+  const convert = async (type, value) => {
     if (value && value.length > 0 && value.trim() !== "") {
       if (type === "roman" && !isNaN(value)) {
         document.getElementById("decimal").focus();
@@ -25,12 +25,10 @@ function App() {
 
       setFocus(type);
 
-      axios.get(`https://localhost:49155/api/RomanNumerals/Parse/${value}`)
+      await axios.get(`https://localhost:49153/api/RomanNumerals/Parse/${value}`)
         .then(function (response) {
           const decimalValue = response.data.decimalValue.toString();
           const romanValue = response.data.romanNumeralValue.toString();
-
-          debugger;
 
           setMessage("");
           setDecimalValue(decimalValue);

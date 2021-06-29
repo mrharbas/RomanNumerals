@@ -124,7 +124,7 @@ namespace RomanNumeralsAPI.Models
             string possibleValues = "IVXLCDM";
 
             string impossibleBeforeVX = "V";
-            string impossibleBeforeLC = "IV";
+            string impossibleBeforeLC = "IVL";
             string impossibleBeforeDM = "IVXD";
 
             string errorInvalidRomanNumeral = "Error. This is not a valid Roman Numeral.";
@@ -149,13 +149,17 @@ namespace RomanNumeralsAPI.Models
             int indexXLX = value.IndexOf("XLX");
             int indexXLC = value.IndexOf("XLC");
             int indexXLM = value.IndexOf("XLM");
+            int indexXXXX = value.IndexOf("XXXX");
+            int indexCCCC = value.IndexOf("CCCC");
+            int indexMMMM = value.IndexOf("MMMM");
 
             if
             (
                 (indexIII == -1 && indexII != -1 && indexII != value.Length - 2) ||
                 (indexIII != -1 && indexIII != value.Length - 3) ||
                 (indexIXI != -1) || (indexXCX != -1) || (indexIVI != -1) || (indexCDC != -1) || (indexCMC != -1) || (indexIXX != -1) ||
-                (indexXCC != -1) || (indexCMM != -1) || (indexXLX != -1) || (indexXLC != -1) || (indexXLM != -1)
+                (indexXCC != -1) || (indexCMM != -1) || (indexXLX != -1) || (indexXLC != -1) || (indexXLM != -1) ||
+                (indexXXXX != - 1) || (indexCCCC != -1) || (indexMMMM != -1)
             )
             {
                 throw new Exception(errorInvalidRomanNumeral);
