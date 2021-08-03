@@ -1,16 +1,7 @@
 import styled from 'styled-components';
 import { Alert } from 'react-bootstrap';
 
-export const Background = styled.div`
-  width: 100%;
-  height: 100vh;
-  position: absolute;
-  background-color: #efefef;
-  left: 0;
-  top: 0;
-  `;
-
-export const ContainerStyled = styled.div`
+export const Container = styled.div`
   background-color: #fff;
   max-width: 800px;
   margin: 100px auto;
