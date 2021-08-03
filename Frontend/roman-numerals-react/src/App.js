@@ -2,11 +2,10 @@ import React, { useState, useEffect } from 'react';
 import BootstrapTable from 'react-bootstrap-table-next';
 import axios from 'axios';
 import {
-  ContainerStyled,
+  Container,
   FormGroup,
   Header,
   Property,
-  Background,
   Subtitle,
   AlertStyled,
 } from './styles.js';
@@ -85,8 +84,7 @@ function App() {
   }];
 
   return (
-    <Background>
-      <ContainerStyled>
+      <Container>
         <Header>Roman Numerals</Header>
         <FormGroup>
           <label htmlFor="roman">Roman:</label>
@@ -135,8 +133,7 @@ function App() {
             </Property>
           }
         </FormGroup>
-      </ContainerStyled>
-    </Background>
+      </Container>
   );
 }
 
