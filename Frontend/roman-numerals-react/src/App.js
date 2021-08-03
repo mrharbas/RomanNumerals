@@ -1,11 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Row, Col, Jumbotron, Alert } from 'react-bootstrap';
 import BootstrapTable from 'react-bootstrap-table-next';
 import axios from 'axios';
-import './App.css';
+import {
+  ContainerStyled,
+  FormGroup,
+  Header,
+  Property,
+  Background,
+  Subtitle,
+  AlertStyled,
+} from './styles.js';
 
 function App() {
-
   const [roman, setRomanValue] = useState("");
   const [decimal, setDecimalValue] = useState("");
   const [explainedValues, setExplainedValues] = useState([]);
@@ -25,7 +31,7 @@ function App() {
 
       setFocus(type);
 
-      await axios.get(`https://localhost:49153/api/RomanNumerals/Parse/${value}`)
+      await axios.get(`https://localhost:49155/api/RomanNumerals/Parse/${value}`)
         .then(function (response) {
           const decimalValue = response.data.decimalValue.toString();
           const romanValue = response.data.romanNumeralValue.toString();
@@ -79,40 +85,58 @@ function App() {
   }];
 
   return (
-    <Container className="p-5">
-      <Jumbotron>
-        <h1 className="header">Roman Numerals</h1>
-          <div className="form-group">
-            <Row>
-              <Col xs={1}><label style={{marginTop: "4px", fontSize: "18px"}}>Roman: </label></Col>
-              <Col xs={3}>
-                <input type="text" class="form-control" id="roman" placeholder="Roman Numeral Value" onKeyUp={(e) => convert(e.target.id, e.target.value.toUpperCase())}></input>
-              </Col>
-              {focus === "roman" && message !== "" ? <Alert id="romanError" variant={'danger'} style={{paddingBottom: "6px", paddingTop: "6px"}}>{message}</Alert> : null}
-            </Row>
-            <Row style={{marginTop: "10px"}}>
-              <Col xs={1}><label style={{marginTop: "4px", fontSize: "18px"}}>Decimal: </label></Col>
-              <Col xs={3}>
-                <input type="text" class="form-control" id="decimal" placeholder="Decimal Value" onKeyUp={(e) => convert(e.target.id, e.target.value.toUpperCase())}></input>
-              </Col>
-              {focus === "decimal" && message !== "" ? <Alert id="decimalError" variant={'danger'} style={{paddingBottom: "6px", paddingTop: "6px"}}>{message}</Alert> : null}
-            </Row>
-            {explainedValues.length > 0 ?
-            <>
-              <Row style={{marginTop: "20px"}}>
-                <Col xs={6}>
-                  <h4>Why this value?:</h4>
-                </Col>
-              </Row>
-              <Row>
-                <Col xs={6}>
-                  <BootstrapTable bootstrap4 keyField='sequence' data={ explainedValues } columns={ tableColumns } noDataIndication="None value to show" striped hover condensed />
-                </Col>
-              </Row>
-            </>: null }
-          </div>
-      </Jumbotron>
-    </Container>
+    <Background>
+      <ContainerStyled>
+        <Header>Roman Numerals</Header>
+        <FormGroup>
+          <label htmlFor="roman">Roman:</label>
+          <Property>
+            <input
+              id="roman"
+              type="text"
+              class="form-control"
+              placeholder="Roman Numeral Value"
+              onKeyUp={(e) => convert(e.target.id, e.target.value.toUpperCase())}
+            />
+            {focus === "roman" && message !== "" &&
+              <AlertStyled id="romanError" variant={'danger'}>
+                {message}
+              </AlertStyled>
+            }
+          </Property>
+          <label htmlFor="decimal">Decimal:</label>
+          <Property>
+            <input
+              id="decimal"
+              type="text"
+              class="form-control"
+              placeholder="Decimal Value"
+              onKeyUp={(e) => convert(e.target.id, e.target.value.toUpperCase())}
+            />
+            {focus === "decimal" && message !== "" &&
+              <AlertStyled id="decimalError" variant={'danger'}>
+                {message}
+              </AlertStyled>
+            }
+          </Property>
+          {explainedValues.length > 0 &&
+            <Property>
+              <Subtitle>Why this value?</Subtitle>
+              <BootstrapTable
+                bootstrap4
+                keyField='sequence'
+                data={explainedValues}
+                columns={tableColumns}
+                noDataIndication="None value to show"
+                striped
+                hover
+                condensed
+              />
+            </Property>
+          }
+        </FormGroup>
+      </ContainerStyled>
+    </Background>
   );
 }
 
